@@ -1,9 +1,9 @@
 ---
 title: "Claude Code を手足にした自宅の JARVIS「AYN Jarvis」を10日で作った（iPhone・Obsidian連携）"
 emoji: "⚙️"
-type: "tech" # tech: 技術記事 / idea: アイデア
+type: "tech"
 topics: ["claudecode", "python", "swiftui", "obsidian", "voicevox"]
-published: false
+published: true
 ---
 
 はじめまして、あゆにゃんです。元・二等機関士（船のエンジン担当）で、今は焼却炉の運転員をしながら個人開発をしています。
