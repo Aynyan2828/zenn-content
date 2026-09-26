@@ -31,7 +31,9 @@ printf '[pre-push] マスターが全文を読んで確認済みですか？ 公
 ans=""
 read -r ans <&3 || true
 exec 3>&-
-if [[ "$ans" == "y" ]]; then
+# 日本語入力のままの全角「ｙ」・全角スペース・大文字 Y でも通す(NFKC で半角にそろえて空白を抜く)
+ans="$(printf '%s' "$ans" | python3 -c 'import sys,unicodedata;print("".join(unicodedata.normalize("NFKC",sys.stdin.read()).split()).lower())' 2>/dev/null)"
+if [[ "$ans" =~ ^y+$ || "$ans" == "yes" ]]; then
   echo "[pre-push] 公開します"
   exit 0
 fi
