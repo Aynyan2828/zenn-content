@@ -1,0 +1,39 @@
+#!/bin/bash
+# 公開事故止め：この push で「published: true」の記事が公開・更新されるなら、
+# 一覧を出してマスターの y を待つ。端末が無い（自動実行）なら止める。
+set -uo pipefail
+zero=0000000000000000000000000000000000000000
+hits=()
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [[ "$local_sha" == "$zero" ]] && continue   # ブランチ削除
+  if [[ "$remote_sha" == "$zero" ]]; then
+    files=$(git ls-tree -r --name-only "$local_sha" -- articles books)
+  else
+    files=$(git diff --name-only "$remote_sha" "$local_sha" -- articles books)
+  fi
+  for f in $files; do
+    [[ "$f" == *.md || "$f" == *.yaml ]] || continue
+    if git show "$local_sha:$f" 2>/dev/null | head -20 | grep -Eq '^published:[[:space:]]*true'; then
+      hits+=("$f")
+    fi
+  done
+done
+
+[[ ${#hits[@]} -eq 0 ]] && exit 0
+
+echo "[pre-push] この push で Zenn に公開・更新される記事:"
+printf '  - %s\n' "${hits[@]}"
+if ! { exec 3<>/dev/tty; } 2>/dev/null; then
+  echo "[pre-push] 端末が無いので止めました（自動公開はしない決まり）" >&2
+  exit 1
+fi
+printf '[pre-push] マスターが全文を読んで確認済みですか？ 公開するなら y: ' >&3
+ans=""
+read -r ans <&3 || true
+exec 3>&-
+if [[ "$ans" == "y" ]]; then
+  echo "[pre-push] 公開します"
+  exit 0
+fi
+echo "[pre-push] 取りやめました" >&2
+exit 1
