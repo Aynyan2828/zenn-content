@@ -169,8 +169,8 @@ POST /api/ask {text, source, audio, image?}
 - Mac の声・iPhone・Discord は1つのロックで直列にし、同じ会話セッションを共有します。iPhone で頼んだ続きを Mac で話せます
 - iPhone アプリ（SwiftUI）は返事を VOICEVOX の声で再生し、アプリ内の AYN が口パクします
 
-![iPhone の Bridge アプリ](/images/ayn-jarvis/iphone_bridge.png =320x)
-*iPhone の Bridge アプリの AYN タブ。マイクを長押しして話すか、文字で打ちます（この画像は Mac に未接続の状態）*
+![iPhone の Bridge アプリ](/images/ayn-jarvis/iphone_bridge.webp)
+*iPhone の Bridge アプリ。左から AYN タブ（マイク長押しか文字で話しかける）、操縦席（サイトと YouTube の数字）、3D Brain、Dashboard。Mac の画面を Tailscale 越しにそのまま開いています*
 
 Siri からは App Intent を1つ作っただけです。ショートカット App で「あゆにゃんに」という名前のショートカットにこのアクションを入れると、「Hey Siri、あゆにゃんに」で話しかけられます。
 
@@ -202,7 +202,7 @@ AYN Jarvis の文脈は、すべて Obsidian の Vault（約7,000ノート）に
 伝言板はファイル1枚で、未読と既読の2段だけ。既読は7日で月別のログに移すので膨らみません。3D Brain では、macOS が返す日本語ファイル名（NFD）を NFC にそろえてからリンクを解決しています。ここを揃えないと、濁点の付いたノートへのリンクがすべて「切れている」扱いになります。
 
 ![3D Brain](/images/ayn-jarvis/brain.png)
-*3D Brain。ログ類を除いた1,289ノートと1,772本のリンクを、フォルダ（カテゴリ）ごとに色分けして表示*
+*3D Brain。ログ類を除いた1,289ノートと1,772本のリンクを、フォルダ（カテゴリ）ごとに色分けして表示。粒1つが1ノートで、押すとそのノートの要約が横に出ます。「成長を再生」を押すと、ひとつのメモから脳が育っていく様子を再生します*
 
 ## 参考にしたリポジトリ
 
